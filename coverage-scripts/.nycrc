@@ -1,0 +1,23 @@
+{
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules/**/*.*",
+      "@angular/**/*.*"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "html",
+      "text",
+      "lcov"
+    ],
+    "sourceMap": false,
+    "instrument": true,
+    "all": true
+}
