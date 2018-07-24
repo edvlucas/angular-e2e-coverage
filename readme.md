@@ -1,6 +1,6 @@
 # Angular e2e coverage
 
-Reference implementation and tutorial showing how to get code coverage from Angular e2e tests.
+Reference implementation/tutorial showing how to get code coverage reports from Angular e2e tests.
 
 ## Steps
 
@@ -21,27 +21,26 @@ Reference implementation and tutorial showing how to get code coverage from Angu
 
     ng new angularapp
 
-4. Create a coverage-sripts folder and copy the contents of this project "coverage-scripts" folder
-    - .nycrc
-    - cov.bat
-    - mapcov.js
+4. Create a coverage-sripts folder (at the root level, parallel to the angular app) and copy into it the contents of this project's "coverage-scripts" folder
 
 5. Add OnComplete to e2e\protractor.conf.js
 
     ```js
     onComplete() {
-    console.log('E2E finished - retrieving coverage from browser');
-    browser.executeScript('return JSON.stringify(window.__coverage__);').then((v) => {
-      console.log(`Script executed - coverage info length is ${v.length}`);
-      require('fs').writeFile("../../coverage-output/.nyc_output/coverage.json", v, function (err) {
-        if (err) {
-          return console.log(err);
-        }
-        console.log("Coverage file extracted from server and saved to coverage.json");
-      });
-    })
+        console.log('E2E finished - retrieving coverage from browser');
+        browser.executeScript('return JSON.stringify(window.__coverage__);').then((v) => {
+          console.log(`Script executed - coverage info length is ${v.length}`);
+          require('fs').writeFile("../../coverage-output/.nyc_output/coverage.json", v, function (err) {
+            if (err) {
+              return console.log(err);
+            }
+            console.log("Coverage file extracted from server and saved to coverage.json");
+          });
+        })
+    }
     ```
 6. Switch to the coverage-scripts folder and run cov.bat
+7. Open the html report at coverage-output\index.html
 
 ## How does it work
 
@@ -52,3 +51,7 @@ Reference implementation and tutorial showing how to get code coverage from Angu
 5. Mapcov.js is used to translate the js file locations to ts file locations using the map files generated during the angular application compilation (ng build)
 6. Lcov's genhtml command is used to create an html report based on the remapped lcov file
 
+## To be improved
+
+* Nyc should be able to use the source map files out-of the box, but I could not get it working. In the meanwhile,  the mapcov.js solution above is a workaround.
+* Mapcov.js needs a list of all the available source-map files. This step can be automated and the list fetched dynamically from the dist folder.
