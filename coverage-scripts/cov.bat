@@ -29,7 +29,8 @@ call nyc report --reporter=lcov --report-dir=..\coverage-output
 
 REM Use the source-maps to remapthe lcov file to the source TS files
 cd ..\coverage-scripts
-call npm i
+call npm init
+call npm i lcov-sourcemap
 call node mapcov.js
 
 REM REM Generate and open the html version of lcov
